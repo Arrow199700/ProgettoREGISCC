@@ -1,0 +1,16 @@
+  {
+    "predictions": [
+      {
+        "label": "mask",
+        "probability": 0.9901360869407654
+      },
+      {
+        "label": "no_mask",
+        "probability": 0.002396771451458335
+      }
+    ],
+    
+    "time_stamp": "103621042021",
+    "success": true,
+    "idObject" : "127.0.0.1"
+  }

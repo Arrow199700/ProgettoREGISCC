@@ -1,0 +1,115 @@
+#title {
+  height: 0;
+  width: auto;
+  text-align: center;
+  display: inline;
+  padding: 0;
+}
+
+.one {
+  position: absolute;
+  right: 0;
+  width: 80%;
+  display: block;
+  padding: 20px;
+}
+
+.up-logo {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.up-logo img {
+  width: auto;
+  height: 80px;
+  margin: 0px 20px;
+}
+
+.up, .down {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 10px;
+  /* UP */
+}
+
+.up .up-left, .down .up-left {
+  position: absolute;
+  right: -20px;
+  width: 25%;
+  top: 10px;
+}
+
+.up .up-left img, .down .up-left img {
+  position: relative;
+  top: -25px;
+  right: 0px;
+  -webkit-transform: translate(25%, 25%);
+          transform: translate(25%, 25%);
+  width: 60%;
+  border-radius: 50%;
+  border-left: 30px;
+}
+
+.up .up-left p, .down .up-left p {
+  color: crimson;
+}
+
+.up .up-right, .down .up-right {
+  width: 75%;
+}
+
+.down-right {
+  left: 0;
+  width: 100%;
+  height: -100px;
+}
+
+.two {
+  /* DOWN */
+  position: absolute;
+  left: 0;
+  top: 100px;
+  width: 20%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  justify-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.two .kpi {
+  padding: 30px;
+  border: 1px solid darkred;
+  margin-bottom: 5px;
+}
+
+.two .kpi h1 {
+  font-size: 20px;
+  text-align: right;
+  -webkit-box-pack: inherit;
+      -ms-flex-pack: inherit;
+          justify-content: inherit;
+}
+
+.two .kpi p {
+  font-size: 30px;
+  height: 0;
+}
+/*# sourceMappingURL=one.css.map */

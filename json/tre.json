@@ -1,0 +1,27 @@
+{
+    "predictions": [
+      {
+        "label": "mask",
+        "probability": 0.9901360869407654
+      },
+      {
+        "label": "no_mask",
+        "probability": 0.002396771451458335
+      },
+      {
+        "label": "boh",
+        "probability": 0.12312312
+      }
+    ],
+
+    "provadue": [
+        {
+            "label": "abc",
+            "probability": 12903123213
+        }
+    ],
+    
+    "time_stamp": "103621042021",
+    "success": true,
+    "idObject" : "127.0.0.1"
+  }

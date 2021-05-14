@@ -1,0 +1,16 @@
+{
+   "time_stamp": "2021-04-22 10:17:54",
+   "success": true,
+
+   "masked": 
+     {
+       "label": "mask",
+       "probability": 0.9901360869407654
+     },
+   "nonmasked":
+     {
+       "label": "no_mask",
+       "probability": 0.0023967714514583
+     }
+   
+ }

@@ -1,0 +1,112 @@
+#title{
+    height: 0;
+
+    width: auto;
+    text-align: center;
+    display: inline;
+
+    padding: 0;
+}
+
+.one{
+    position: absolute;
+    right: 0;
+    width: 80%;
+    display: block;
+    padding: 20px;
+}
+
+.up-logo{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    img{
+        width: auto;
+        height: 80px;
+        margin: 0px 20px;
+    }
+}
+
+.up, .down{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+
+    
+    /* UP */
+    .up-left{
+        position: absolute;
+        right: -20px;
+        width: 25%;
+        top: 10px;
+            img{
+            position: relative;
+            top: -25px;
+            right: 0px;
+            transform: translate(25%, 25%);
+            width: 60%;
+            border-radius: 50%;
+            border-left:30px;
+            }
+            p{
+                color:crimson;
+            }
+    }
+    .up-right{
+        width: 75%;
+    }
+
+    
+    
+}
+
+.down-right{
+    left: 0;
+        width: 100%;
+        height: -100px;
+
+    }
+
+.two {
+
+   
+        
+
+
+
+     /* DOWN */
+     
+    position: absolute;
+    left: 0; top: 100px;
+    width: 20%;
+
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    justify-content: space-around;
+    
+    
+    .kpi{ padding: 30px;
+        border: 1px solid darkred;
+        margin-bottom: 5px;
+        h1{
+            font-size: 20px;
+            text-align: right;
+            justify-content: inherit;
+            
+            
+            
+        }
+        p{
+            font-size: 30px;
+            height: 0;
+
+            
+            
+            
+        }
+    }
+    
+  }
+
