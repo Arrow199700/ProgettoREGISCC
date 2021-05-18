@@ -37,8 +37,8 @@
     <div class="row">
         <div class="col-1"><img src="img/imgregisc.png" /></div>
         <div class="col-10">
-            <div class="title1 text-center">Gestione e Innovazione Sistemi di Comando e Controllo - Gruppo Innovazione, Sviluppo e Sperimentazione C4-ISR</div>
-            <div class="title2 text-center">Sistema Advanced Recognition and Exploitation System</div>
+            <div class="title1 text-center">Advanced Recognition and Exploitation System</div>
+            <div class="title2 text-center">Next Generation PED</div>
         </div>
         <div class="col-1"><img src="img/imgregisc2.png" /></div>
     </div>
@@ -99,28 +99,24 @@
     var ArrayCountTruck = Array();
     var ArrayCountExcavator = Array();
     var ArrayCountCar = Array();
-
     var ArrayHourMinute = Array();
     var ArrayLabels = Array();
     var myChart = null;
+    var secondi = 0;
+
+    var nCar = 0;
+    var nIndivid = 0;
+    var nPickup = 0;
+    var nTruck = 0;
+    var nExcavator = 0;
     
+    //query per andrea, contatore "ISTANTE" inizializzato a 0
+
+
+
     //per aggiornare i kpi
 
-    function CountItems(sLabel,target) {
-        var n = -1;
-        $.ajax({
-            method: "POST",
-            url: "php/queryFiltered.php",
-            data: { 
-                label: sLabel ,
-                istante: '2021-05-13 15:31:01'
-            },
-            success: function(result){
-                target[0].innerHTML = result;
-            }
-        });
-    }
-    
+ 
     function LoadArrayObjects(sLabel,ArrayTarget) {
         return $.ajax({
             method: "POST",
@@ -137,7 +133,7 @@
         return $.ajax({
             method: "POST",
             url: "php/queryChartParams.php",
-            data: { label: "Pick-up" },
+            data: { label: "Pick-up", istante: secondi },
             success: function(result){
                 var arRes = JSON.parse(result);
                 arRes.forEach(element =>ArrayCountPickup.push(element));
@@ -148,7 +144,7 @@
         return $.ajax({
             method: "POST",
             url: "php/queryChartParams.php",
-            data: { label: "Excavator" },
+            data: { label: "Excavator", istante: secondi },
             success: function(result){
                 var arRes = JSON.parse(result);
                 arRes.forEach(element =>ArrayCountExcavator.push(element));
@@ -159,7 +155,7 @@
         return $.ajax({
             method: "POST",
             url: "php/queryChartParams.php",
-            data: { label: "Truck" },
+            data: { label: "Truck", istante: secondi },
             success: function(result){
                 var arRes = JSON.parse(result);
                 arRes.forEach(element =>ArrayCountTruck.push(element));
@@ -170,7 +166,7 @@
         return $.ajax({
             method: "POST",
             url: "php/queryChartParams.php",
-            data: { label: "Indiviual" },
+            data: { label: "Indiviual", istante: secondi },
             success: function(result){
                 var arRes = JSON.parse(result);
                 arRes.forEach(element =>ArrayCountIndividual.push(element));
@@ -181,13 +177,35 @@
         return $.ajax({
             method: "POST",
             url: "php/queryChartParams.php",
-            data: { label: "Car" },
+            data: { label: "Car", istante: secondi },
             success: function(result){
                 var arRes = JSON.parse(result);
                 arRes.forEach(element =>ArrayCountCar.push(element));
             }
         });
     }    
+    function AddKPI()
+    {
+        ArrayCountIndividual.push(nIndivid);
+        ArrayCountCar.push(nCar)
+        ArrayCountExcavator.push(nExcavator)
+        ArrayCountPickup.push(nPickup)
+        ArrayCountTruck.push(nTruck)
+    }
+    function AggiornaGrafico_New()
+    {
+
+        myChart.data.datasets[0].data = ArrayCountIndividual;
+        myChart.data.datasets[1].data = ArrayCountCar;
+        myChart.data.datasets[2].data = ArrayCountExcavator;
+        myChart.data.datasets[3].data = ArrayCountPickup;
+        myChart.data.datasets[4].data = ArrayCountTruck;
+        myChart.data.labels = ArrayHourMinute;
+        myChart.update();
+        console.log("New chart updated.");
+        
+    }
+
      function AggiornaGrafico()
     {
         ArrayCountPickup = Array();
@@ -212,7 +230,6 @@
             myChart.data.datasets[3].data = ArrayCountPickup;
             myChart.data.datasets[4].data = ArrayCountTruck;
             myChart.data.labels = ArrayHourMinute;
-            //var currExcavator = ArrayCountExcavator.slice(-1);
             myChart.update();
             
              
@@ -222,8 +239,8 @@
 
     function LoadArrayAsseX() {
         ArrayHourMinute = Array();
-        var sql = 'select * from(select *, DATE_FORMAT(Istante, "%H:%i:%s") as ora_minuto from mask_cam.tablenew order by convert(Istante,DATETIME) desc ) as y  order by convert(Istante,DATETIME) desc;';
-        var field = 'ora_minuto';
+        var sql = "select secondi, count(*) as conteggio from tablenew where secondi <=" + secondi + "  group by secondi order by secondi;";
+        var field = 'secondi';
         return $.ajax({
             method: "POST",
             url: "php/queryChart.php",
@@ -322,14 +339,111 @@
             }
         });
     }
-    function PopulateKPI()
+    function CountItems(sLabel,target) {
+        return $.ajax({
+            method: "POST",
+            url: "php/queryFiltered.php",
+            data: { 
+                label: sLabel,
+                istante: secondi
+            },
+            success: function(result){
+                target = parseInt(result);
+            }
+        });
+    }
+    
+    function CountCar()
     {
-        CountItems("Pick-up", $("#nPickUp"));
-        CountItems("Car", $("#nCar"));
-        CountItems("Excavator", $("#nExcavator"));
-        CountItems("Indiviual", $("#nIndividual"));
-        CountItems("Truck", $("#nTruck"));
-
+        return $.ajax({
+            method: "POST",
+            url: "php/queryFiltered.php",
+            data: { 
+                label: "Car",
+                istante: secondi
+            },
+            success: function(result){
+                nCar = parseInt(result);
+            }
+        });
+    }
+    function CountExcavator()
+    {
+        return $.ajax({
+            method: "POST",
+            url: "php/queryFiltered.php",
+            data: { 
+                label: "Excavator",
+                istante: secondi
+            },
+            success: function(result){
+                nExcavator = parseInt(result);
+            }
+        });
+    }
+    function CountIndivid()
+    {
+        return $.ajax({
+            method: "POST",
+            url: "php/queryFiltered.php",
+            data: { 
+                label: "Indiviual",
+                istante: secondi
+            },
+            success: function(result){
+                nIndivid = parseInt(result);
+            }
+        });
+    }
+    function CountTruck()
+    {
+        return $.ajax({
+            method: "POST",
+            url: "php/queryFiltered.php",
+            data: { 
+                label: "Truck",
+                istante: secondi
+            },
+            success: function(result){
+                nTruck = parseInt(result);
+            }
+        });
+    }
+    function CountPickup()
+    {
+        return $.ajax({
+            method: "POST",
+            url: "php/queryFiltered.php",
+            data: { 
+                label: "Pick-Up",
+                istante: secondi
+            },
+            success: function(result){
+                nPickup = result;
+            }
+        });
+    }
+    function PopulateKPI()
+    {   
+        secondi = secondi + 1;
+        $.when(
+            CountCar(),
+            CountExcavator(),
+            CountIndivid(),
+            CountTruck(),
+            CountPickup()
+        ).done(function(response)
+            {
+                $("#nCar")[0].innerHTML = nCar;
+                $("#nIndividual")[0].innerHTML = nIndivid;
+                $("#nPickUp")[0].innerHTML = nPickup;
+                $("#nTruck")[0].innerHTML = nTruck;
+                $("#nExcavator")[0].innerHTML = nExcavator;
+                ArrayHourMinute.push(secondi);
+                AddKPI();
+                AggiornaGrafico_New();
+            }
+        );
     }
     function popolaDB()
     {
@@ -348,20 +462,21 @@
     }
 
 $(document).ready(function(){
+    secondi = -1;
+    // $.when(
+    //     LoadArrayPickup(),
+    //     LoadArrayIndividual(),
+    //     LoadArrayCar(),
+    //     LoadArrayExcavator(),
+    //     LoadArrayTruck(),
+    //     LoadArrayAsseX()
+    // ).done(function(response)
+    // {
+    //     CreaGrafico();
+    // });
 
-    popolaDB();
+    CreaGrafico();
     PopulateKPI();
-    $.when(
-    LoadArrayPickup(),
-    LoadArrayIndividual(),
-    LoadArrayCar(),
-    LoadArrayExcavator(),
-    LoadArrayTruck(),
-    LoadArrayAsseX()
-    ).done(function(response)
-    {
-        CreaGrafico();
-    });
 
     // $.when(LoadArrayObjects("Pick-up",this.ArrayCountPickup) , 
     //         LoadArrayObjects("Indiviual",this.ArrayCountIndividual),
@@ -371,8 +486,8 @@ $(document).ready(function(){
     //     {
     //         CreaGrafico();
     //     });
-    setInterval(AggiornaGrafico, 1000);
     setInterval(PopulateKPI, 1000);
+    //setInterval(AggiornaGrafico, 1000);
     
     
 });
@@ -398,21 +513,24 @@ setInterval(() => {
     if (lastExcavator != currExcavator) {
         console.log("Curr", currExcavator);
         lastExcavator = currExcavator;
-        $(".ctnAlert").append("<p>Excavator identificato alle ore " + ArrayHourMinute.slice(-1)  +  "</p>");
+        $(".ctnAlert").append("<p>Excavator identificato al secondo " + ArrayHourMinute.slice(-1)  +  "</p>");
+        scrollAlert();
+    } else if ( currindivid >= 5) {
+        lastindivid = currindivid;
+        $(".ctnAlert").append("<p>Piu di 5 Individui identificati al secondo " + ArrayHourMinute.slice(-1)  +  "</p>");
+        scrollAlert();
+    } else {
+        lastpickup = currpickup;
+        $(".ctnAlert").append("<p>Pick-Up identificato al secondo " + ArrayHourMinute.slice(-1)  +  "</p>");
+        scrollAlert();
+    }
 
-        } else if ( currindivid >= 7){
-                    lastindivid = currindivid;
-                    $(".ctnAlert").append("<p>Piu di 7 Individui identificati alle ore " + ArrayHourMinute.slice(-1)  +  "</p>");
-            
 
-        } else{
-            lastpickup = currpickup;
-            $(".ctnAlert").append("<p>Pick-Up identificato alle ore " + ArrayHourMinute.slice(-1)  +  "</p>");
-            }
-
-
-}, 6000);
-
+}, 1000);
+function scrollAlert()
+{
+    $(".ctnAlert").scrollTop($(".ctnAlert")[0].scrollHeight);
+}
   
 
 </script>

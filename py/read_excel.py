@@ -8,7 +8,7 @@ import pymysql
 import pandas as pd
 import time
 
-tablenew = pd.read_excel(r'C:\xampp\htdocs\definitivo\py\data.xlsx') 
+tablenew = pd.read_excel(r'C:\xampp\htdocs\definitivo\py\datigiusti.xlsx') 
 
 
 
@@ -45,6 +45,6 @@ for i,row in tablenew.iterrows():
   
     print("Send it")
             
-    time.sleep(.1)
+    time.sleep(.2)
 
     

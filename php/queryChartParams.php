@@ -3,18 +3,10 @@ include ("dbconnection.php");
 
 
 $label = isset($_POST['label']) ? $_POST['label'] : "%";
-  $sql = 'select *
-  from (select count(*) as conteggio,
-      label,
-      DATE_FORMAT(Istante, "%H:%i:%s") as `ora_minuto`
-  from mask_cam.mask
-  where label="' . $label . '"
-  group by label, ora_minuto
-  order by ora_minuto desc
-  limit 30) as x
-  order by ora_minuto;';
+$secondi = isset($_POST['istante']) ? $_POST['istante'] : "%";
+ 
 
-  $sql=  "select label , istante, COUNT(*) AS conteggio FROM (SELECT DISTINCT ObjectId, label, istante FROM tablenew  ) AS A  WHERE label LIKE '%" . $label . "%' GROUP BY label, Istante;";
+  $sql=  "select label, secondi , count(*) as conteggio from tablenew where label like '%". $label . "%' and secondi <= " . $secondi . " GROUP BY label, secondi order by secondi;";
 
 
 
