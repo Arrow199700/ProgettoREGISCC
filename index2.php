@@ -9,10 +9,10 @@
     $colorC1 = "rgb(84, 130, 53, 0.7)";
     $colorC2 = "rgba(0, 51, 153, 0.7)";
     $colorC3 = "rgba(255, 0, 0, 0.6)";
-    $colorC4 = "rgba(244, 0, 161, 0.7)";
+    $colorC4 = "rgba(143, 0, 255, 0.7)";
     $colorC5 = "rgba(255, 255, 0, 0.6)";
     $ini = parse_ini_file('app.ini');
-
+    $maxSec = fnQueryChart("select MAX(secondi) as valore FROM inferenza;","valore");
 ?>
 <!DOCTYPE html>
 <html lang="it" class="h-100">
@@ -44,35 +44,75 @@
     </div>
     <div class="row">
         <div class="col-3">
-            <div class="kpi_list">
-                <div class="row kpi_item" style="color: <?php echo $color1 ?> !important;">
-                    <div class="col-6 kpi_label">Individual</div>
-                    <div id="nIndividual" class="col-6 kpi_value"></div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="row kpi_item">
+                        <div class="col-6 kpi_label">Individual</div>
+                        <div id="nIndividual" class="col-6 kpi_value"></div>
+                    </div>
                 </div>
-                <div class="row kpi_item" style="color: <?php echo $color2 ?> !important;">
-                    <div class="col-6 kpi_label">Car</div>
-                    <div id="nCar" class="col-6 kpi_value"></div>
-                </div>
-                <div class="row kpi_item" style="color: <?php echo $color3 ?> !important;">
-                    <div class="col-6 kpi_label">Excavator</div>
-                    <div id="nExcavator" class="col-6 kpi_value"></div>
-                </div>
-                <div class="row kpi_item" style="color: <?php echo $color4 ?> !important;">
-                    <div class="col-6 kpi_label">Pick-Up</div>
-                    <div id="nPickUp" class="col-6 kpi_value"></div>
-                </div>
-                <div class="row kpi_item" style="color: <?php echo $color5 ?> !important;">
-                    <div class="col-6 kpi_label">Truck</div>
-                    <div id="nTruck" class="col-6 kpi_value"></div>
+                <div class="col-6">
+                    <img id="icoIndivid" src="img/individ.png" class="icoKPI" />
                 </div>
             </div>
-            <div class="drone">
-
+            <div class="row">
+                <div class="col-6">
+                    <div class="row kpi_item">
+                        <div class="col-6 kpi_label">Car</div>
+                        <div id="nCar" class="col-6 kpi_value"></div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <img id="icoCar" src="img/car.png" class="icoKPI" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="row kpi_item">
+                        <div class="col-6 kpi_label">Excavator</div>
+                        <div id="nExcavator" class="col-6 kpi_value"></div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <img id="icoExcavator" src="img/excavator.png" class="icoKPI" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="row kpi_item">
+                        <div class="col-6 kpi_label">Pick-Up</div>
+                        <div id="nPickUp" class="col-6 kpi_value"></div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <img id="icoPickup" src="img/pickup.png" class="icoKPI" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="row kpi_item">
+                        <div class="col-6 kpi_label">Truck</div>
+                        <div id="nTruck" class="col-6 kpi_value"></div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <img id="icoTruck" src="img/truck.png" class="icoKPI" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="drone"></div>
+                </div>
             </div>
         </div>
         <div class="col-6">
             <div class="vidoeTitle">Drone xyz - Video del 2020-09-11 15:35</div>
-                <iframe width="100%" height="400" src="https://www.youtube.com/embed/lVdh571SwOQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+            <video width="100%" height="400" autoplay muted> 
+                <source src="DEMO_labelled_conv.mp4" type="video/mp4"> 
+                </video>
+
+                <!-- <iframe width="100%" height="400" src="https://www.youtube.com/embed/lVdh571SwOQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
         </div>
         <div class="col-3">
             <p>Alert</p> 
@@ -85,14 +125,17 @@
             <canvas id="myChart"></canvas>
         </div>
         <div class="col-3">
-            <iframe width="100%" height="200" id="gmap_canvas" src="https://maps.google.com/maps?q=viale%20luigi%20schiavonetti&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
-
+            <!-- <iframe width="100%" height="200" id="gmap_canvas" src="https://maps.google.com/maps?q=viale%20luigi%20schiavonetti&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe> -->
+            <img src="img/georef.png" height="200px" width="auto" />
         </div>
     </div>
 </div>
 </body>
 </html>
 <script type="text/javascript">
+    var lastExcavator = 0;
+    var lastindivid =   0;
+    var lastpickup =    0;
     //console.log($ini);
     var ArrayCountPickup = Array();
     var ArrayCountIndividual = Array();
@@ -100,6 +143,7 @@
     var ArrayCountExcavator = Array();
     var ArrayCountCar = Array();
     var ArrayHourMinute = Array();
+    var PrevArrayHourMinute = Array();
     var ArrayLabels = Array();
     var myChart = null;
     var secondi = 0;
@@ -110,9 +154,16 @@
     var nTruck = 0;
     var nExcavator = 0;
     
+    var maxSeconds = <?php echo $maxSec ?>;
+
+    var intervalAlert;
+    var intervalKPI;
     //query per andrea, contatore "ISTANTE" inizializzato a 0
 
-
+    $.ajaxSetup ({
+        // Disable caching of AJAX responses */
+        cache: false
+    });
 
     //per aggiornare i kpi
 
@@ -120,7 +171,7 @@
     function LoadArrayObjects(sLabel,ArrayTarget) {
         return $.ajax({
             method: "POST",
-            url: "php/queryChartParams.php",
+            url: "php/queryChartParams_Inferenza.php",
             data: { label: sLabel },
             success: function(result){
                 var arRes = JSON.parse(result);
@@ -132,7 +183,7 @@
     function LoadArrayPickup() {
         return $.ajax({
             method: "POST",
-            url: "php/queryChartParams.php",
+            url: "php/queryChartParams_Inferenza.php",
             data: { label: "Pick-up", istante: secondi },
             success: function(result){
                 var arRes = JSON.parse(result);
@@ -143,7 +194,7 @@
     function LoadArrayExcavator() {
         return $.ajax({
             method: "POST",
-            url: "php/queryChartParams.php",
+            url: "php/queryChartParams_Inferenza.php",
             data: { label: "Excavator", istante: secondi },
             success: function(result){
                 var arRes = JSON.parse(result);
@@ -154,7 +205,7 @@
     function LoadArrayTruck() {
         return $.ajax({
             method: "POST",
-            url: "php/queryChartParams.php",
+            url: "php/queryChartParams_Inferenza.php",
             data: { label: "Truck", istante: secondi },
             success: function(result){
                 var arRes = JSON.parse(result);
@@ -165,7 +216,7 @@
     function LoadArrayIndividual() {
         return $.ajax({
             method: "POST",
-            url: "php/queryChartParams.php",
+            url: "php/queryChartParams_Inferenza.php",
             data: { label: "Indiviual", istante: secondi },
             success: function(result){
                 var arRes = JSON.parse(result);
@@ -176,7 +227,7 @@
     function LoadArrayCar() {
         return $.ajax({
             method: "POST",
-            url: "php/queryChartParams.php",
+            url: "php/queryChartParams_Inferenza.php",
             data: { label: "Car", istante: secondi },
             success: function(result){
                 var arRes = JSON.parse(result);
@@ -237,9 +288,10 @@
         console.log("Chart updated.");
     }
 
+
     function LoadArrayAsseX() {
         ArrayHourMinute = Array();
-        var sql = "select secondi, count(*) as conteggio from tablenew where secondi <=" + secondi + "  group by secondi order by secondi;";
+        var sql = "select secondi, count(*) as conteggio from inferenza where secondi <=" + secondi + "  group by secondi order by secondi;";
         var field = 'secondi';
         return $.ajax({
             method: "POST",
@@ -328,12 +380,29 @@
                 ],
             },
             options: {
+                elements: {
+                    point: {
+                        radius: 0
+                    }
+                },
                 responsive: true,
                 maintainAspectRatio: false,
                 scales: {
                     y: {
                         beginAtZero: true,
-                        stacked: true
+                        stacked: true,
+                        ticks : {
+                            color: '#ffffff'
+                        },
+                        grid: {
+                            color: '#ffffff'
+                        }
+                    },
+                    x: {
+                        ticks : {
+                            color: '#ffffff'
+                        }
+
                     }
                 }
             }
@@ -423,6 +492,50 @@
             }
         });
     }
+    function ShowHideIcons()
+    {
+        var durata = 300;
+        if (nCar > 0)
+        {
+            $("#icoCar").show(durata);
+        }
+        else
+        {
+            $("#icoCar").hide(durata);
+        }
+        if (nIndivid > 0)
+        {
+            $("#icoIndivid").show(durata);
+        }
+        else
+        {
+            $("#icoIndivid").hide(durata);
+        }
+        if (nPickup > 0)
+        {
+            $("#icoPickup").show(durata);
+        }
+        else
+        {
+            $("#icoPickup").hide(durata);
+        }
+        if (nTruck > 0)
+        {
+            $("#icoTruck").show(durata);
+        }
+        else
+        {
+            $("#icoTruck").hide(durata);
+        }
+        if (nExcavator > 0)
+        {
+            $("#icoExcavator").show(durata);
+        }
+        else
+        {
+            $("#icoExcavator").hide(durata);
+        }
+    }
     function PopulateKPI()
     {   
         secondi = secondi + 1;
@@ -439,9 +552,7 @@
                 $("#nPickUp")[0].innerHTML = nPickup;
                 $("#nTruck")[0].innerHTML = nTruck;
                 $("#nExcavator")[0].innerHTML = nExcavator;
-                ArrayHourMinute.push(secondi);
-                AddKPI();
-                AggiornaGrafico_New();
+                ShowHideIcons()
             }
         );
     }
@@ -461,76 +572,68 @@
         });
     }
 
-$(document).ready(function(){
-    secondi = -1;
-    // $.when(
-    //     LoadArrayPickup(),
-    //     LoadArrayIndividual(),
-    //     LoadArrayCar(),
-    //     LoadArrayExcavator(),
-    //     LoadArrayTruck(),
-    //     LoadArrayAsseX()
-    // ).done(function(response)
-    // {
-    //     CreaGrafico();
-    // });
-
-    CreaGrafico();
-    PopulateKPI();
-
-    // $.when(LoadArrayObjects("Pick-up",this.ArrayCountPickup) , 
-    //         LoadArrayObjects("Indiviual",this.ArrayCountIndividual),
-    //         LoadArrayObjects("Truck",this.ArrayCountTruck),
-    //         LoadArrayObjects("Excavator",this.ArrayCountExcavator)
-    //     ).done(function(response)
-    //     {
-    //         CreaGrafico();
-    //     });
-    setInterval(PopulateKPI, 1000);
-    //setInterval(AggiornaGrafico, 1000);
-    
-    
-});
     //funzione che in base al identificazione dell'excavator, PICK-UP e individui se sono più di 7
-
-    var lastExcavator = parseInt($("#nExcavator")[0].innerHTML);
-    var currExcavator = parseInt($("#nExcavator")[0].innerHTML);
-    var lastpickup =    parseInt($("#nPickUp")[0].innerHTML);
-    var currpickup =    parseInt($("#nPickUp")[0].innerHTML);
-    var lastindivid =   parseInt($("#nIndividual")[0].innerHTML);
-    var currindivid =   parseInt($("#nIndividual")[0].innerHTML);
-setInterval(() => {
-    
-    var currindivid =   parseInt($("#nIndividual")[0].innerHTML);
-    console.log("last", lastindivid);
-
-    var currpickup =    parseInt($("#nPickUp")[0].innerHTML);
-    console.log("Last", lastpickup);
-
-    currExcavator = parseInt($("#nExcavator")[0].innerHTML);
-    console.log("Last", lastExcavator);
-
-    if (lastExcavator != currExcavator) {
-        console.log("Curr", currExcavator);
-        lastExcavator = currExcavator;
-        $(".ctnAlert").append("<p>Excavator identificato al secondo " + ArrayHourMinute.slice(-1)  +  "</p>");
-        scrollAlert();
-    } else if ( currindivid >= 5) {
-        lastindivid = currindivid;
-        $(".ctnAlert").append("<p>Piu di 5 Individui identificati al secondo " + ArrayHourMinute.slice(-1)  +  "</p>");
-        scrollAlert();
-    } else {
-        lastpickup = currpickup;
-        $(".ctnAlert").append("<p>Pick-Up identificato al secondo " + ArrayHourMinute.slice(-1)  +  "</p>");
-        scrollAlert();
+    function gestioneAlert()
+    {
+        intervalAlert = setInterval(valutaAlert, 1000);
     }
+    function scrollAlert()
+    {
+        $(".ctnAlert").scrollTop($(".ctnAlert")[0].scrollHeight);
+    }
+    function valutaAlert()
+    {
+        if (secondi <= maxSeconds)
+        {
 
+            var currindivid =   parseInt($("#nIndividual")[0].innerHTML);
+            var currExcavator = parseInt($("#nExcavator")[0].innerHTML);
+            var currpickup =    parseInt($("#nPickUp")[0].innerHTML);
+            
 
-}, 1000);
-function scrollAlert()
-{
-    $(".ctnAlert").scrollTop($(".ctnAlert")[0].scrollHeight);
-}
-  
+            currExcavator = parseInt($("#nExcavator")[0].innerHTML);
+            console.log("Last", lastExcavator);
+
+            if (lastExcavator < currExcavator) {
+                console.log("Curr", currExcavator);
+                lastExcavator = currExcavator;
+                $(".ctnAlert").append("<p>Excavator identificato al secondo " + ArrayHourMinute.slice(-1)  +  "</p>");
+                scrollAlert();
+            }
+            if ( lastindivid < currindivid && currindivid > 5) {
+                lastindivid = currindivid;
+                $(".ctnAlert").append("<p>Piu di 5 Individui identificati al secondo " + ArrayHourMinute.slice(-1)  +  "</p>");
+                scrollAlert();
+            } 
+            if (lastpickup < currpickup) {
+                lastpickup = currpickup;
+                $(".ctnAlert").append("<p>Pick-Up identificato al secondo " + ArrayHourMinute.slice(-1)  +  "</p>");
+                scrollAlert();
+            }
+        }
+    }
+    function checkDB()
+    {
+        $.when(
+            LoadArrayAsseX()
+        ).done(function(response){
+
+        }
+        );
+    }
+    $(document).ready(function(){
+        secondi = -1;
+
+        CreaGrafico();
+        PopulateKPI();
+        AggiornaGrafico();
+
+        intervalKPI = setInterval(PopulateKPI, 1000);
+        intervalGrafico = setInterval(AggiornaGrafico, 1000);
+        gestioneAlert();
+        ShowHideIcons();
+        // var myVideo = $
+        // myVideo.play()
+    });
 
 </script>
